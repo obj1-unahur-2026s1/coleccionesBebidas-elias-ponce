@@ -1,5 +1,7 @@
 import bebidas.*
 import tito.*
+import ingredientes.*
+
 
 describe "Tests de Tito" {
   test "Tito consume 10 de Whisky y su sustancia actual es Whisky" {
@@ -12,5 +14,30 @@ describe "Tests de Tito" {
   test "Tito consume 10 de Whisky y su dosis consumida es 10" {
     tito.consumir(10, whisky)
     assert.equals(10, tito.dosisConsumida())
+  }
+}
+
+describe "Bebidas 2 testeos" {
+  test "Se le agreagan nuevos ingredientes al licuado y se le agrega al coctel" {
+    coctel.agregarBebida(licuadoDeFrutas)
+    const coctelDeAntes = coctel.rendimientoQueOtorga(1000)
+    licuadoDeFrutas.agregarIngrediente(leche)
+    assert.that(coctel.rendimientoQueOtorga(1000) != coctelDeAntes)
+  }
+
+  test "Puede el coctel incluir a la vez whisky y agua saborizada con whisky"{
+    coctel.agregarBebida(whisky)
+    assert.that(coctel.bebidasQueContiene().contains(whisky))
+    aguaSaborizada.bebida(whisky)
+    assert.equals(whisky, aguaSaborizada.bebida())
+    coctel.agregarBebida(aguaSaborizada)
+    assert.that(coctel.bebidasQueContiene().contains(aguaSaborizada))
+  }
+
+  test "Puede el coctel incluir el agua saborizada con coctel" {
+    aguaSaborizada.bebida(coctel)
+    assert.equals(coctel, aguaSaborizada.bebida())
+    coctel.agregarBebida(aguaSaborizada)
+    assert.that(coctel.bebidasQueContiene().contains(aguaSaborizada))
   }
 }
